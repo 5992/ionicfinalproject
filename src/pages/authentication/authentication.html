@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ title }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <!-- Login Form -->
+  <ion-list>
+    <form [formGroup]="loginForm">
+      <ion-item text-center>
+        <h3>Sign in to Administrator Account</h3>
+        <p>Only the admin of this project can sign in
+        <br>to maintain the content of the project.</p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked >Email</ion-label>
+        <ion-input [formControl]="loginForm.controls['email']" placeholder="Email Address" type="email" ></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!loginForm.controls.email.valid && loginForm.controls.email.dirty" class="validator-error">
+        Please enter a valid email address
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked >Password</ion-label>
+        <ion-input [formControl]="loginForm.controls['password']" placeholder="Password" type="password" ></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!loginForm.controls.password.valid && loginForm.controls.password.dirty" class="validator-error">
+        Password cannot be empty
+      </ion-item>
+
+      <ion-item>
+        <button ion-button color="primary" full type="submit" [disabled]="!loginForm.valid" (click)="login()" >
+          Sign in
+        </button>
+      </ion-item>
+    </form>
+  </ion-list>
+</ion-content>

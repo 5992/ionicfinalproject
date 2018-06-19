@@ -3,9 +3,14 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import firebase from 'firebase';
+import { Configuration } from '../configuration/configuration';
+
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-
+import { AuthenticationPage } from '../pages/authentication/authentication';
+import { LogoutPage } from '../pages/logout/logout';
+import { AdminPage } from '../pages/admin/admin';
 @Component({
   templateUrl: 'app.html'
 })
@@ -13,18 +18,33 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
-    ];
-
+    //firebase section
+    firebase.initializeApp( Configuration.firebase );
+    const unsubscribe = firebase.auth().onAuthStateChanged( user => {
+      if (!user) {
+        this.rootPage = HomePage;
+        this.pages = [
+          { title: 'Home', component: HomePage },
+          { title: 'Search', component: ListPage },
+          { title: 'Admin Sign In', component: AuthenticationPage }
+        ];
+      }
+      else {
+        this.rootPage = AdminPage;
+        this.pages = [
+          // Them admin update and deleteDrink
+          // { title: 'Home', component: HomePage },
+          { title: 'Search', component: ListPage },
+          { title: 'Admin Page', component: AdminPage },
+          { title: 'Logout', component: LogoutPage }
+        ];
+      }
+    });
   }
 
   initializeApp() {

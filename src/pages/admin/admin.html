@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Manage Drink</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+      <ion-item>
+        <h1 text-center>Drink Card List</h1>
+      </ion-item>
+      <ion-item>
+      <button ion-button color="dark" (click)="openCreateModal({mode:'add'})">
+        Add Drink
+      </button>
+    </ion-item>
+  <br>
+  <ion-grid *ngFor="let drink of drinks; let i=index">
+    <ion-row>
+      <ion-col col-md-6 col-sm-6 col-12>
+        <ion-card>
+          <ion-card-header>
+              <h3>{{drink.name}}</h3>
+          </ion-card-header>
+          <ion-card-content>
+            <img [src]= "'assets/drinks-img/' + drink.image" (click)="openModal({title: drink.name, howtomix: drink.howtomix, image: drink.image, ingredients: drink.ingredients })">
+          </ion-card-content>
+          <ion-row>
+            <ion-col text-center>
+              <button ion-button class="action" color="secondary" (click)="openCreateModal({mode:'edit', id: drink.id, name:drink.name, howtomix: drink.howtomix, image: drink.image, ingredients: drink.ingredients})">
+                <ion-icon name="create"></ion-icon>
+              </button>
+            </ion-col>
+            <ion-col text-center>
+              <button class="action" ion-button color="danger" (click)="delete(drink.id)">
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </ion-list>
+</ion-content>

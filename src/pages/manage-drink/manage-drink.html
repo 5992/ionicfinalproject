@@ -1,0 +1,48 @@
+<!--
+  Generated template for the ManageDrinkPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Manage Drink</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <form [formGroup] = "drinkForm">
+      <ion-item>
+        <ion-label stacked >Drink Name</ion-label>
+        <ion-input [formControl]="drinkForm.controls['name']" [(ngModel)]="name" placeholder="Name of drink (min 4 characters)" type="text"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="!drinkForm.controls.name.valid && drinkForm.controls.name.dirty" class="validator-error">
+        Minimum 4 characters
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Ingredients</ion-label>
+        <ion-textarea [formControl]="drinkForm.controls['ingredients']" [(ngModel)]="ingredients" placeholder="Provide ingredients here"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>How to mix</ion-label>
+        <ion-textarea [formControl]="drinkForm.controls['howtomix']" [(ngModel)]="howtomix" placeholder="Provide instruction here"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Image</ion-label>
+        <ion-textarea [formControl]="drinkForm.controls['image']" [(ngModel)]="image" placeholder="Provide image name here"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-row>
+          <ion-col>
+            <button ion-button full color="primary" (click)="closeModal()">Cancel</button>
+          </ion-col>
+          <ion-col>
+            <!--[disabled] = this button is disabled until the form is validated see the validator in the ts file for this page -->
+            <button ion-button full color="primary" [disabled]="!drinkForm.valid" (click)="saveDrink()">Save Drink</button>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </form>
+  </ion-list>
+</ion-content>

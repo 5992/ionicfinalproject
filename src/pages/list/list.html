@@ -3,21 +3,20 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>List</ion-title>
+    <ion-title>Cocktails Recipes</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-end>
-        {{item.note}}
-      </div>
-    </button>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list *ngFor="let drink of drinksList; let i=index">
+      <ion-item >
+        <ion-thumbnail item-start>
+          <img [src]= "'assets/drinks-img/' + drink.image">
+        </ion-thumbnail>
+        <h2>{{drink.name}}</h2>
+        <p>Click View to see details</p>
+        <button ion-button clear item-end (click)="launchModalListPage({title: drink.name, howtomix: drink.howtomix, image: drink.image, ingredients: drink.ingredients })">View</button>
+      </ion-item>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>
